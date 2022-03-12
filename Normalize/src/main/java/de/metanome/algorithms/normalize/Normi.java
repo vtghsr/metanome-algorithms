@@ -34,6 +34,7 @@ import de.metanome.algorithms.normalize.aspects.NormiConversion;
 import de.metanome.algorithms.normalize.aspects.NormiPersistence;
 import de.metanome.algorithms.normalize.fddiscovery.FdDiscoverer;
 import de.metanome.algorithms.normalize.fddiscovery.HyFDFdDiscoverer;
+import de.metanome.algorithms.normalize.fddiscovery.TaneFdDiscoverer;
 import de.metanome.algorithms.normalize.fdextension.FdExtender;
 import de.metanome.algorithms.normalize.fdextension.PullingFdExtender;
 import de.metanome.algorithms.normalize.structures.FunctionalDependency;
@@ -120,8 +121,8 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 		System.out.println();
 		System.out.println("///// FD-Discovery ///////");
 		System.out.println();
-		
-		FdDiscoverer fdDiscoverer = new HyFDFdDiscoverer(this.converter, this.persister, this.tempResultsPath);
+
+		FdDiscoverer fdDiscoverer = new TaneFdDiscoverer(this.converter,this.persister,this.tempResultsPath);
 		Map<BitSet, BitSet> fds = fdDiscoverer.calculateFds(this.inputGenerator, this.nullEqualsNull, true);
 		
 		// Statistics
@@ -239,8 +240,8 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 			columnIdentifierNumber++;
 		}
 		
-		this.tempResultsPath = "temp" + File.separator + this.tableName + "-hyfd.txt";
-		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-hyfd_extended.txt";
+		this.tempResultsPath = "temp" + File.separator + this.tableName + "-TaneFd.txt";
+		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-TaneFd_extended.txt";
 		
 		this.converter = new NormiConversion(this.columnIdentifiers, name2number, number2name);
 		this.persister = new NormiPersistence(this.columnIdentifiers);
