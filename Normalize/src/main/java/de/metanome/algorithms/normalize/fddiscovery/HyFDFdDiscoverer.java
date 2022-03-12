@@ -4,9 +4,8 @@ import java.io.IOException;
 
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
 import de.metanome.algorithm_integration.input.RelationalInputGenerator;
-import de.metanome.algorithms.hyfd.HyFD;
-import de.metanome.algorithms.normalize.aspects.NormiConversion;
-import de.metanome.algorithms.normalize.aspects.NormiPersistence;
+import de.metanome.algorithms.hyfd.*;
+import de.metanome.algorithms.normalize.aspects.*;
 import de.metanome.backend.result_receiver.ResultCache;
 
 public class HyFDFdDiscoverer extends FdDiscoverer {

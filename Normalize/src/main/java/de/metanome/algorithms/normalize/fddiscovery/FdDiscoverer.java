@@ -1,13 +1,12 @@
 package de.metanome.algorithms.normalize.fddiscovery;
 
-import java.util.BitSet;
-import java.util.Map;
-
 import de.metanome.algorithm_integration.AlgorithmExecutionException;
 import de.metanome.algorithm_integration.input.RelationalInputGenerator;
-import de.metanome.algorithms.normalize.aspects.NormiConversion;
-import de.metanome.algorithms.normalize.aspects.NormiPersistence;
+import de.metanome.algorithms.normalize.aspects.*;
 import de.metanome.backend.result_receiver.ResultCache;
+
+import java.util.BitSet;
+import java.util.Map;
 
 public abstract class FdDiscoverer {
 
