@@ -32,10 +32,7 @@ import de.metanome.algorithm_integration.results.basic_statistic_values.BasicSta
 import de.metanome.algorithm_integration.results.basic_statistic_values.BasicStatisticValueString;
 import de.metanome.algorithms.normalize.aspects.NormiConversion;
 import de.metanome.algorithms.normalize.aspects.NormiPersistence;
-import de.metanome.algorithms.normalize.fddiscovery.FdDiscoverer;
-import de.metanome.algorithms.normalize.fddiscovery.FdepFdDiscoverer;
-import de.metanome.algorithms.normalize.fddiscovery.HyFDFdDiscoverer;
-import de.metanome.algorithms.normalize.fddiscovery.TaneFdDiscoverer;
+import de.metanome.algorithms.normalize.fddiscovery.*;
 import de.metanome.algorithms.normalize.fdextension.FdExtender;
 import de.metanome.algorithms.normalize.fdextension.PullingFdExtender;
 import de.metanome.algorithms.normalize.structures.FunctionalDependency;
@@ -73,12 +70,12 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 	
 	@Override
 	public String getAuthors() {
-		return "Thorsten Papenbrock";
+		return "vtghsr";
 	}
 
 	@Override
 	public String getDescription() {
-		return "Schema normalization into BCNF using HyFD";
+		return "Schema normalization into BCNF using FastFD with 1 thread";
 	}
 	
 	@Override
@@ -123,7 +120,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 		System.out.println("///// FD-Discovery ///////");
 		System.out.println();
 
-		FdDiscoverer fdDiscoverer = new FdepFdDiscoverer(this.converter,this.persister,this.tempResultsPath);
+		FdDiscoverer fdDiscoverer = new FastFdDiscoverer(this.converter,this.persister,this.tempResultsPath);
 		Map<BitSet, BitSet> fds = fdDiscoverer.calculateFds(this.inputGenerator, this.nullEqualsNull, true);
 		
 		// Statistics
@@ -241,8 +238,8 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 			columnIdentifierNumber++;
 		}
 		
-		this.tempResultsPath = "temp" + File.separator + this.tableName + "-FdepFd.txt";
-		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-FdepFd_extended.txt";
+		this.tempResultsPath = "temp" + File.separator + this.tableName + "-FastFd.txt";
+		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-FastFd_extended.txt";
 		
 		this.converter = new NormiConversion(this.columnIdentifiers, name2number, number2name);
 		this.persister = new NormiPersistence(this.columnIdentifiers);
