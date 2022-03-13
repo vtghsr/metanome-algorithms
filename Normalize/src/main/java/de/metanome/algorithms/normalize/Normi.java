@@ -39,6 +39,8 @@ import de.metanome.algorithms.normalize.structures.FunctionalDependency;
 import de.metanome.algorithms.normalize.structures.Schema;
 import de.metanome.algorithms.normalize.utils.Utils;
 import de.uni_potsdam.hpi.utils.CollectionUtils;
+import de.metanome.algorithms.normalize.fddiscovery.FastFd2KerneDiscoverer;
+
 
 public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameterAlgorithm {
 
@@ -120,7 +122,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 		System.out.println("///// FD-Discovery ///////");
 		System.out.println();
 
-		FdDiscoverer fdDiscoverer = new FastFdDiscoverer(this.converter,this.persister,this.tempResultsPath);
+		FdDiscoverer fdDiscoverer = new FastFd2KerneDiscoverer(this.converter,this.persister,this.tempResultsPath);
 		Map<BitSet, BitSet> fds = fdDiscoverer.calculateFds(this.inputGenerator, this.nullEqualsNull, true);
 		
 		// Statistics
