@@ -75,7 +75,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 
 	@Override
 	public String getDescription() {
-		return "Schema normalization into BCNF using FastFD with 1 thread";
+		return "Schema normalization into BCNF using FastFD with 2 thread";
 	}
 	
 	@Override

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>de.metanome.algorithms.normi</groupId>
-  <artifactId>Normalize-FastFds-1thread</artifactId>
+  <artifactId>Normalize-FastFds-2thread</artifactId>
   <packaging>jar</packaging>
 
   <name>Normalize</name>
