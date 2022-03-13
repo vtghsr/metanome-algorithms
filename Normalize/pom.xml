@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>de.metanome.algorithms.normi</groupId>
-  <artifactId>Normalize-Tane</artifactId>
+  <artifactId>Normalize-Fdep</artifactId>
   <packaging>jar</packaging>
 
   <name>Normalize</name>
@@ -79,6 +79,12 @@
     <dependency>
       <groupId>de.metanome.algorithms.tane</groupId>
       <artifactId>TANE</artifactId>
+      <version>1.2-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.metanome.algorithms.fdep</groupId>
+      <artifactId>FDep</artifactId>
       <version>1.2-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
