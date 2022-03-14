@@ -23,6 +23,7 @@ public class DepMinerFdDiscoverer extends FdDiscoverer{
             resultFds = new ResultCache("MetanomeMock",null);
 
             algo.setRelationalInputConfigurationValue(AlgorithmGroup2DepMiner.INPUT_TAG,inputGenerator);
+            algo.setBooleanConfigurationValue(AlgorithmGroup2DepMiner.USE_OPTIMIZATIONS_TAG,true);
             algo.setResultReceiver(resultFds);
             algo.execute();
         }

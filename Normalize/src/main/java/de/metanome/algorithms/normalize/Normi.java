@@ -77,7 +77,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 
 	@Override
 	public String getDescription() {
-		return "Schema normalization into BCNF using DepMiner";
+		return "Schema normalization into BCNF using DepMiner with multiple threads";
 	}
 	
 	@Override
@@ -240,8 +240,8 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 			columnIdentifierNumber++;
 		}
 		
-		this.tempResultsPath = "temp" + File.separator + this.tableName + "-DepMiner.txt";
-		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-DepMiner_extended.txt";
+		this.tempResultsPath = "temp" + File.separator + this.tableName + "-DepMiner-opt.txt";
+		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-DepMiner-opt_extended.txt";
 		
 		this.converter = new NormiConversion(this.columnIdentifiers, name2number, number2name);
 		this.persister = new NormiPersistence(this.columnIdentifiers);
