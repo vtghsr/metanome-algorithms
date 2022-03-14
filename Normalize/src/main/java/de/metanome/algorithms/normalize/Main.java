@@ -30,6 +30,7 @@ public class Main {
 	
 	private static void executeNormi(Config conf) {
 		try {
+			System.out.println("executeNormi");
 			Normi normi = new Normi();
 			
 			RelationalInputGenerator relationalInputGenerator = null;

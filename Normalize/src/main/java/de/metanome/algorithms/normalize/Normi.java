@@ -77,7 +77,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 
 	@Override
 	public String getDescription() {
-		return "Schema normalization into BCNF using FastFD with 2 thread";
+		return "Schema normalization into BCNF using FastFD with 2 threads";
 	}
 	
 	@Override
@@ -240,8 +240,8 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 			columnIdentifierNumber++;
 		}
 		
-		this.tempResultsPath = "temp" + File.separator + this.tableName + "-FastFd.txt";
-		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-FastFd_extended.txt";
+		this.tempResultsPath = "temp" + File.separator + this.tableName + "-FastFD2K.txt";
+		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-FastFD2K_extended.txt";
 		
 		this.converter = new NormiConversion(this.columnIdentifiers, name2number, number2name);
 		this.persister = new NormiPersistence(this.columnIdentifiers);

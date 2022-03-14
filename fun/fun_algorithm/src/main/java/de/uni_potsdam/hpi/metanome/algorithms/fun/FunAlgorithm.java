@@ -63,6 +63,7 @@ public class FunAlgorithm {
 
     public void run(List<PositionListIndex> pliList)
             throws InputIterationException, CouldNotReceiveResultException, ColumnNameMismatchException {
+        System.out.println("run fun.");
 
         LinkedList<FunQuadruple> lkminusOne = new LinkedList<>();
         lkminusOne.add(new FunQuadruple(new ColumnCombinationBitset(), Long.MAX_VALUE,
