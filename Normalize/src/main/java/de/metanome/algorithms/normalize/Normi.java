@@ -77,7 +77,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 
 	@Override
 	public String getDescription() {
-		return "Schema normalization into BCNF using FUN";
+		return "Schema normalization into BCNF using DepMiner";
 	}
 	
 	@Override
@@ -122,7 +122,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 		System.out.println("///// FD-Discovery ///////");
 		System.out.println();
 
-		FdDiscoverer fdDiscoverer = new FunFdDiscoverer(this.converter,this.persister,this.tempResultsPath);
+		FdDiscoverer fdDiscoverer = new DepMinerFdDiscoverer(this.converter,this.persister,this.tempResultsPath);
 		Map<BitSet, BitSet> fds = fdDiscoverer.calculateFds(this.inputGenerator, this.nullEqualsNull, true);
 		
 		// Statistics
@@ -240,8 +240,8 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 			columnIdentifierNumber++;
 		}
 		
-		this.tempResultsPath = "temp" + File.separator + this.tableName + "-Fun.txt";
-		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-Fun_extended.txt";
+		this.tempResultsPath = "temp" + File.separator + this.tableName + "-DepMiner.txt";
+		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-DepMiner_extended.txt";
 		
 		this.converter = new NormiConversion(this.columnIdentifiers, name2number, number2name);
 		this.persister = new NormiPersistence(this.columnIdentifiers);

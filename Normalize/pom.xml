@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>de.metanome.algorithms.normi</groupId>
-  <artifactId>Normalize-FUN</artifactId>
+  <artifactId>Normalize-DepMiner</artifactId>
   <packaging>jar</packaging>
 
   <name>Normalize</name>
@@ -103,6 +103,18 @@
     <dependency>
       <groupId>de.metanome.algorithms.fun</groupId>
       <artifactId>fun_algorithm</artifactId>
+      <version>1.2-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.metanome.algorithms.dfd</groupId>
+      <artifactId>DFD</artifactId>
+      <version>1.2-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.metanome.algorithms.depminer</groupId>
+      <artifactId>DepMiner</artifactId>
       <version>1.2-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
