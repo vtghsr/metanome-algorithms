@@ -77,7 +77,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 
 	@Override
 	public String getDescription() {
-		return "Schema normalization into BCNF using DepMiner with multiple threads";
+		return "Schema normalization into BCNF using DFD";
 	}
 	
 	@Override
@@ -122,9 +122,12 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 		System.out.println("///// FD-Discovery ///////");
 		System.out.println();
 
-		FdDiscoverer fdDiscoverer = new DepMinerFdDiscoverer(this.converter,this.persister,this.tempResultsPath);
+		long startTime = System.currentTimeMillis();
+		FdDiscoverer fdDiscoverer = new TaneFdDiscoverer(this.converter,this.persister,this.tempResultsPath);
 		Map<BitSet, BitSet> fds = fdDiscoverer.calculateFds(this.inputGenerator, this.nullEqualsNull, true);
-		
+		long endTime = System.currentTimeMillis();
+		System.out.println("FD discover time: "+ (endTime - startTime) + "ms");
+
 		// Statistics
 		int numFds = (int)fds.values().stream().mapToLong(BitSet::cardinality).sum();
 		float avgFdsLhsLength = fds.entrySet().stream().mapToLong(entry -> entry.getKey().cardinality() * entry.getValue().cardinality()).sum() / (float)numFds;
@@ -240,8 +243,8 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 			columnIdentifierNumber++;
 		}
 		
-		this.tempResultsPath = "temp" + File.separator + this.tableName + "-DepMiner-opt.txt";
-		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-DepMiner-opt_extended.txt";
+		this.tempResultsPath = "temp" + File.separator + this.tableName + "-TaneFd.txt";
+		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-TaneFd_extended.txt";
 		
 		this.converter = new NormiConversion(this.columnIdentifiers, name2number, number2name);
 		this.persister = new NormiPersistence(this.columnIdentifiers);
