@@ -82,7 +82,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 
 	@Override
 	public String getDescription() {
-		return "Schema normalization into BCNF using HyFD";
+		return "Schema normalization into BCNF using Tane";
 	}
 	
 	@Override
@@ -128,7 +128,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 		System.out.println();
 
 
-		FdDiscoverer fdDiscoverer = new HyFDFdDiscoverer(this.converter,this.persister,this.tempResultsPath);
+		FdDiscoverer fdDiscoverer = new TaneFdDiscoverer(this.converter,this.persister,this.tempResultsPath);
 		long FdDiscoverBegin = System.currentTimeMillis();
 		Map<BitSet, BitSet> fds = fdDiscoverer.calculateFds(this.inputGenerator, this.nullEqualsNull, true);
 		long FdDiscoverEnd = System.currentTimeMillis();
@@ -280,9 +280,9 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 			columnIdentifierNumber++;
 		}
 		
-		this.tempResultsPath = "temp" + File.separator + this.tableName + "-HyFDFd.txt";
-		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-HyFDFd_extended.txt";
-		this.tempStatisticPath = "temp" + File.separator + this.tableName + "-HyFD_stat.txt";
+		this.tempResultsPath = "temp" + File.separator + this.tableName + "-TaneFd.txt";
+		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-TaneFd_extended.txt";
+		this.tempStatisticPath = "temp" + File.separator + this.tableName + "-Tane_stat.txt";
 		
 		this.converter = new NormiConversion(this.columnIdentifiers, name2number, number2name);
 		this.persister = new NormiPersistence(this.columnIdentifiers);

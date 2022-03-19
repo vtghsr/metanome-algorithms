@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>de.metanome.algorithms.normi</groupId>
-  <artifactId>Normalize-HyFD</artifactId>
+  <artifactId>Normalize-Tane</artifactId>
   <packaging>jar</packaging>
 
   <name>Normalize</name>
