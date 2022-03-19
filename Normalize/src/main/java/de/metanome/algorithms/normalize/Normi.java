@@ -77,7 +77,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 
 	@Override
 	public String getDescription() {
-		return "Schema normalization into BCNF using DFD";
+		return "Schema normalization into BCNF using HyFD";
 	}
 	
 	@Override
@@ -123,7 +123,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 		System.out.println();
 
 		long startTime = System.currentTimeMillis();
-		FdDiscoverer fdDiscoverer = new TaneFdDiscoverer(this.converter,this.persister,this.tempResultsPath);
+		FdDiscoverer fdDiscoverer = new HyFDFdDiscoverer(this.converter,this.persister,this.tempResultsPath);
 		Map<BitSet, BitSet> fds = fdDiscoverer.calculateFds(this.inputGenerator, this.nullEqualsNull, true);
 		long endTime = System.currentTimeMillis();
 		System.out.println("FD discover time: "+ (endTime - startTime) + "ms");
@@ -243,8 +243,8 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 			columnIdentifierNumber++;
 		}
 		
-		this.tempResultsPath = "temp" + File.separator + this.tableName + "-TaneFd.txt";
-		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-TaneFd_extended.txt";
+		this.tempResultsPath = "temp" + File.separator + this.tableName + "-HyFDFd.txt";
+		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-HyFDFd_extended.txt";
 		
 		this.converter = new NormiConversion(this.columnIdentifiers, name2number, number2name);
 		this.persister = new NormiPersistence(this.columnIdentifiers);
