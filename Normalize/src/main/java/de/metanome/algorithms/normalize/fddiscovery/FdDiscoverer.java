@@ -31,10 +31,12 @@ public abstract class FdDiscoverer {
 			fds = this.converter.toFunctionalDependencyMap(resultFds.fetchNewResults());
 			
 			this.persister.write(fds, this.tempResultsPath, false);
+
 		}
 		
 		return fds;
 	}
+
 	
 	protected abstract ResultCache executeAlgorithm(RelationalInputGenerator inputGenerator, Boolean nullEqualsNull) throws AlgorithmExecutionException;
 }

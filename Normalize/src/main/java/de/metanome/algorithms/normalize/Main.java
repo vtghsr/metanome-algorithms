@@ -19,7 +19,6 @@ public class Main {
 	public static void main(String[] args) {
 		Config conf = new Config();
 		conf.isHumanInTheLoop = true;
-		
 		if (args.length != 0)
 			conf.setDataset(args[0]);
 		

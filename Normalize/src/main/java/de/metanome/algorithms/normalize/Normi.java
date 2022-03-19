@@ -1,6 +1,9 @@
 package de.metanome.algorithms.normalize;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -40,6 +43,7 @@ import de.metanome.algorithms.normalize.structures.Schema;
 import de.metanome.algorithms.normalize.utils.Utils;
 import de.uni_potsdam.hpi.utils.CollectionUtils;
 import de.metanome.algorithms.normalize.fddiscovery.FastFd2KerneDiscoverer;
+import de.uni_potsdam.hpi.utils.FileUtils;
 
 
 public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameterAlgorithm {
@@ -53,6 +57,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 
 	private String tempResultsPath;
 	private String tempExtendedResultsPath;
+	private String tempStatisticPath;
 	
 	private NormiConversion converter;
 	private NormiPersistence persister;
@@ -122,11 +127,12 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 		System.out.println("///// FD-Discovery ///////");
 		System.out.println();
 
-		long startTime = System.currentTimeMillis();
+
 		FdDiscoverer fdDiscoverer = new HyFDFdDiscoverer(this.converter,this.persister,this.tempResultsPath);
+		long FdDiscoverBegin = System.currentTimeMillis();
 		Map<BitSet, BitSet> fds = fdDiscoverer.calculateFds(this.inputGenerator, this.nullEqualsNull, true);
-		long endTime = System.currentTimeMillis();
-		System.out.println("FD discover time: "+ (endTime - startTime) + "ms");
+		long FdDiscoverEnd = System.currentTimeMillis();
+
 
 		// Statistics
 		int numFds = (int)fds.values().stream().mapToLong(BitSet::cardinality).sum();
@@ -144,8 +150,11 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 		
 	//	FdExtender fdExtender = new NaiveFdExtender(this.persister, this.tempExtendedResultsPath);
 	//	FdExtender fdExtender = new PushingFdExtender(this.persister, this.tempExtendedResultsPath);
+
 		FdExtender fdExtender = new PullingFdExtender(this.persister, this.tempExtendedResultsPath, this.columnIdentifiers.size(), true);
+		long FdExtendBegin = System.currentTimeMillis();
 		fds = fdExtender.calculateClosure(fds, true);
+		long FdExtendEnd = System.currentTimeMillis();
 		
 		// Statistics
 		int numExtendedFds = fds.keySet().size();
@@ -161,6 +170,14 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 		System.out.println("# aggregated FDs: " + numAggregatedFds + " (avg lhs size: " + avgAggregatedFdsLhsLength + "; avg rhs size: " + avgAggregatedFdsRhsLength + ")");
 		System.out.println("# extended FDs: " + numExtendedFds + " (avg lhs size: " + avgExtendedFdsLhsLength + "; avg rhs size: " + avgExtendedFdsRhsLength + ")");
 		System.out.println("# FD-Keys: " + numFdKeys + " (avg size: " + avgFdKeyLength + ")");
+
+		String stat = "#FD discover time: " + (FdDiscoverEnd - FdDiscoverBegin) + "ms\n"+
+				"#FD closure calculate time: " + (FdExtendEnd - FdExtendBegin) + "ms\n" +
+				"# FDs: " + numFds + " (avg lhs size: " + avgFdsLhsLength + "; avg rhs size: " + avgFdsRhsLength + ")\n" +
+				"# aggregated FDs: " + numAggregatedFds + " (avg lhs size: " + avgAggregatedFdsLhsLength + "; avg rhs size: " + avgAggregatedFdsRhsLength + ")\n" +
+				"# extended FDs: " + numExtendedFds + " (avg lhs size: " + avgExtendedFdsLhsLength + "; avg rhs size: " + avgExtendedFdsRhsLength + ")\n" +
+				"# FD-Keys: " + numFdKeys + " (avg size: " + avgFdKeyLength + ")\n";
+		writeStatistic(this.tempStatisticPath,stat);
 		
 		System.out.println();
 		System.out.println("///// BCNF-Building //////");
@@ -184,6 +201,26 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 			
 			this.resultReceiver.receiveResult(result);
 		}
+	}
+
+	private void writeStatistic(String statPath,String stat) throws AlgorithmExecutionException{
+		BufferedWriter writer = null;
+		try {
+			writer = FileUtils.buildFileWriter(statPath,false);
+			writer.write(stat);
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			throw new AlgorithmExecutionException(e.getMessage(),e);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+			throw new AlgorithmExecutionException(e.getMessage(),e);
+		}
+		finally {
+			FileUtils.close(writer);
+		}
+
 	}
 
 	private String BitSetAttributesToString(BitSet bitSetAttributes) {
@@ -245,6 +282,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 		
 		this.tempResultsPath = "temp" + File.separator + this.tableName + "-HyFDFd.txt";
 		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-HyFDFd_extended.txt";
+		this.tempStatisticPath = "temp" + File.separator + this.tableName + "-HyFD_stat.txt";
 		
 		this.converter = new NormiConversion(this.columnIdentifiers, name2number, number2name);
 		this.persister = new NormiPersistence(this.columnIdentifiers);
