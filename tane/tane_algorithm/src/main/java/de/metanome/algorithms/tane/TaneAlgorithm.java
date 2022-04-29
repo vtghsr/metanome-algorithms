@@ -370,19 +370,19 @@ public class TaneAlgorithm implements FunctionalDependencyAlgorithm,
         for (long i = 0; i < pt2List.size64(); i++) {
             for (long t_id : pt2List.get(i)) {
                 // tuple is also in an equivalence class of pt1
-                if (tTable.get(t_id).longValue() != -1) {
-                    partition.get(tTable.get(t_id).longValue()).add(t_id);
+                if (tTable.get(t_id) != -1) {
+                    partition.get(tTable.get(t_id)).add(t_id);
                 }
             }
             for (long tId : pt2List.get(i)) {
                 // if condition not in the paper;
-                if (tTable.get(tId).longValue() != -1) {
-                    if (partition.get(tTable.get(tId).longValue()).size64() > 1) {
-                        LongBigArrayBigList eqClass = partition.get(tTable.get(tId).longValue());
+                if (tTable.get(tId) != -1) {
+                    if (partition.get(tTable.get(tId)).size64() > 1) {
+                        LongBigArrayBigList eqClass = partition.get(tTable.get(tId));
                         result.add(eqClass);
                         noOfElements += eqClass.size64();
                     }
-                    partition.set(tTable.get(tId).longValue(), new LongBigArrayBigList());
+                    partition.set(tTable.get(tId), new LongBigArrayBigList());
                 }
             }
         }
