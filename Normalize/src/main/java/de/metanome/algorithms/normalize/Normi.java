@@ -82,7 +82,7 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 
 	@Override
 	public String getDescription() {
-		return "Schema normalization into BCNF using FastFds with all available kernels";
+		return "Schema normalization into BCNF using pyro FDs";
 	}
 	
 	@Override
@@ -280,9 +280,9 @@ public class Normi implements BasicStatisticsAlgorithm, RelationalInputParameter
 			columnIdentifierNumber++;
 		}
 		
-		this.tempResultsPath = "temp" + File.separator + this.tableName + "-FunFd.txt";
-		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-FunFd_extended.txt";
-		this.tempStatisticPath = "temp" + File.separator + this.tableName + "-Fun_stat.txt";
+		this.tempResultsPath = "temp" + File.separator + this.tableName + "-PyroFd.txt";
+		this.tempExtendedResultsPath = "temp" + File.separator + this.tableName + "-PyroFd_extended.txt";
+		this.tempStatisticPath = "temp" + File.separator + this.tableName + "-Pyro_stat.txt";
 		
 		this.converter = new NormiConversion(this.columnIdentifiers, name2number, number2name);
 		this.persister = new NormiPersistence(this.columnIdentifiers);
